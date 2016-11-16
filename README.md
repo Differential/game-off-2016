@@ -1,94 +1,93 @@
-# GitHub Game Off 2016
+# Github Game Off 2016 - Game of Life Hacks
 
-![GitHub Game Off 2016 Theme is Hacking, Modding, or Augmenting](https://cloud.githubusercontent.com/assets/121322/19498019/d8827370-9543-11e6-82d8-6da822b6147b.png)
+# Abstract
 
-<div align="right">
-  <sup>
-    <a href="#the-challenge">English</a> ·
-    <a href="#お題">日本語</a>
-  </sup>
-</div>
+Card based choose your own adventure game. Player is presented with a series of binary choices presented as cards.
+The results of those choices will be either unexpected or unguesable.
+The player can swipe the cards to the left or the right to make choices that affect his score.
 
-## The Challenge
+Ther player's score is represented through a series of meters at the top of his screen.
+Some of the meteors being filled will end the game, other meteors should be kept full to increase score.
 
-You have the entire month of November to create a game *loosely* based on the theme **hacking, modding and/or augmenting**.
+The decisions presented to the player are chronological, but non sequential.
+They have a vauge ordering that's enforced, but none of the cards have any impact or depend on any other cards.
 
-What do we mean by **loosely** based on hacking, modding and/or augmenting? We literally mean, *loosely* based. Some examples might be:
+After a certain number of cards, the game ends and the user is presented with a score.
 
-* an endless runner where you *hack* down binary trees in your path with a pixelated axe,
-* a *modern* take on a classic e.g. a roguelike set in a 3D or VR world, or
-* an *augmented* reality game bringing octopus/cat hybrids into the real world.
+# Theme
 
-Unleash your creativity. You can work alone or with a team and build for any platform or device. The use of open source game engines and libraries is encouraged but not required.
+** Game of Life Hacks ** is theme chosen to represent the card based game.
 
-We'll highlight some of our favorites on the GitHub blog, and the world will get to enjoy (and maybe even contribute to and/or learn from) your creations.
+The theme is based off the board game "The Game of Life".
+The player progresses along a random track of cards, making choices that affect his money, health, and social media score.
+The health, money, and social media score are the three bars at the top of the screen.
 
-## How to participate
+If health runs out, the game ends.
+The more money you have at the end of the game, the higher your score.
+A higher social media score increases your money, but decreases your health (mechanics around this need more defininition)
 
-* [Sign up for a free personal account][github-signup] if you don't already have one.
-* Fork [this repository][game-off-repo] to your personal account (or to a [free organization account][github-signup-org]).
-* Clone the repository on your computer and build your game.
-* Push your game source code to your forked repository before Dec 1st.
-* Update the `README.md` file to include a description of your game, how/where to play/download it, how to build/compile it, what dependencies it has, etc.
-* Submit your final game using this [form][wufoo-form].
 
-## It's dangerous to go alone <img src="https://octodex.github.com/images/linktocat.jpg" height="40">
+Examples of theme:
 
-If you're **new to Git, GitHub, or version control**…
+- You get a bonus from work. Do you want to spend the money on A) An intelligence boost, or B) Cancer-fighting nano-bots?
+- Character creation UI: from the perspective or your parents who are engineering their future offspring. Choose gender, etc as well as individual attributes from a finite pool of "points".
+- In addition to money, you have a personal rating you are trying to maintain (i.e. Black Mirror "Nose Dive" episode). Random "event cards" are spawned that cause your rating to go up or down, with reactions you can take that may further raise or lower your rating.
+- End game is to accumulate enough money and a high rating so that you have better "end life" options (e.g. transfer your consciousness to a VR world, cryogenic freezing, etc)
 
-* [Git Documentation](https://git-scm.com/documentation) - everything you need to know about version control, and how to get started with Git.
-* [GitHub Help](https://help.github.com/) - everything you need to know about GitHub.
-* Questions about GitHub? Please [contact our Support team][github-support] and they'll be delighted to help you.
-* Questions specific to the GitHub Game Off? Please [create an issue][game-off-repo-issues]. This will be the official FAQ.
+# Architecture
 
-The official Twitter hashtag for the Game Off is `#ggo16`. We look forward to playing with your creations.
+Game is React Native app, let's only worry about iOS for now.
+Cards are represented in a set of JSON arrays. We should have a set of cards for the early game, mid game, and end game (to enforce a vauge chronological order).
 
-GLHF! <3
+Cards will look something like this:
 
-## お題
+```
+{
+  text: "Bla bla bla"
+  image: "image uri"
+  options: [
+    {
+      text: 'do something',
+      resultText: 'you did something!',
+      effect: {
+        health: 20,
+        social: -5,
+        money: 0
+      }
+    },
+    {
+      text: 'the other option',
+      resultText: 'why did you do that!',
+      effect: {
+        health: 0,
+        social: 30,
+        money: 20,
+      }
+    }
+  ]
+}
+````
 
-11月いっぱいを使って、ゲームを作ってください。作ってもらいたいゲームのテーマは大まかに言って、**hacking, modding and/or augmenting(ハック、改造もしくは拡張)**です。
+When the user starts the game, decide how many cards should be shown from each timeline.
+We should probably show no more than 1/3 of the card selection per playthrough, so if we create 30 "early game" cards
+the user should see 10 cards for from the early game.
 
-"**大まか**に言ってhacking, modding and/or augmenting(ハック、改造もしくは拡張)"とはどういう意味でしょうか？ 文字通り、*大まか*にテーマに沿っていればいいということです。
+When a user completes a card, apply the effect of their choices to their score.
+Then grab another card from the set. Do this until the user has seen a set number of cards.
 
-例えば、こんな例も含まれるということです:
 
-* ピクセル製の斧をつかってあなたが*叩き切った*(*hack* down)バイナリツリー上をランナーが走り続けるゲームとか
-* ゲームの古典をベースに*現代的*(*modern*)な解釈をするとか(例えばローグライクゲームを3DやVRの世界で再現してみる)
-* タコと猫のハイブリッドを現実世界に持ち込むような*拡張*現実(*augmented* reality)ゲームとか
+### Backend.
+None.
 
-みなさんのクリエイティビティを最大限発揮できるように、1人で作業してもチームで作業しても問題ありませんし、作るゲームがどんなプラットフォーム向けでもどんなデバイス向けでも不問とします。また、オープンソースのゲームエンジンやライブラリを使用することは歓迎しますが、必須ではありません。
+### Persistance?
+Use Redux + Redux Storage.
 
-ご応募いただいたゲームのうちいくつかはGitHubのブログで取り上げる予定です。世界中があなたが作ったゲームを楽しんでくれると思います。（そしてあなたのゲームに対して貢献もしてくれるかもしれませんし、同時にあなたのゲームから何かを学び取ることもあるでしょう）
+# Contributors
 
-## 参加方法
+If you are looking for a way to contribute, I have come up with ideas for who could work on what.
 
-* まだGitHubのアカウントを持っていない場合、[GitHubにサインアップしてアカウントを作ってください。（無料のもので問題ありません）][github-signup]
-* [このリポジトリ][game-off-repo]を自分のアカウントにフォークしてください。（もしくは[オーガニゼーションにフォークしても問題ありません。もちろん無料プランでいいです。][github-signup-org])
-* 自身のコンピュータにリポジトリをクローンして、ゲームを開発してください。
-* ゲームのソースコードをフォークした自分のリポジトリに12月1日になる前にプッシュしてください。
-* `README.md`ファイルを更新して、ゲームの説明、プレイの仕方、ダウンロードの仕方、またはビルド/コンパイルの方法、依存しているライブラリ等の説明、等々、必要な情報を含めてください。
-* 最後にこの[フォーム][wufoo-form]を使ってゲームをサブミットしてください。
-
-## ヒトリデハキケンジャ コレヲ サズケヨウ <img src="https://octodex.github.com/images/linktocat.jpg" height="40">
-
-もし**GitやGitHub、バージョン管理そのものについて初心者なのであれば**...
-
-* [Git Documentation](https://git-scm.com/documentation) - バージョンコントロールについてと、Gitを使い始めるために必要な情報はここにあります。（日本語で読める情報としては[Pro Gitの日本語版](https://git-scm.com/book/ja/v2)があります）
-* [GitHub Help](https://help.github.com/) - GitHubについてはこちらを参照してください。
-* GitHubについて質問したいことがあれば、ぜひ[ここから問い合わせてください！（ただし英語でお願いします :bow: )][github-support] サポートチームが助けてくれます。
-* GitHub Game Offに関する質問については、[ここにIssueを作って聞いてください。（英語でお願いします）][game-off-repo-issues]. これが公式のFAQになっていく予定です。
-
-このGame OffのためのTwitterの公式ハッシュタグは`#ggo16`です。皆さんのゲームで遊べるのを楽しみにしています。
-
-GLHF! <3
-
-<!-- links -->
-[game-off-repo]:        https://github.com/github/game-off-2016/
-[game-off-repo-issues]: https://github.com/github/game-off-2016/issues
-[git-documentation]:    https://git-scm.com/documentation
-[github-help]:          https://help.github.com/
-[github-signup]:        https://github.com/signup/free  
-[github-signup-org]:    https://github.com/organizations/new
-[github-support]:       https://github.com/contact?form%5Bsubject%5D=GitHub%20Game%20Off
-[wufoo-form]:           https://gameoff.wufoo.com/forms/game-off-2016/
+- Woody / Marcello - Card Structure / Redux Actions for interacting with cards.
+- Conrad / Nick - Card flow, look and feel.
+- Jess / Josh - Card design, some images we could use for cards.
+- Jess / Salem - Card ideas. Come up with questions, answers for those questions, and example effects for those answers.
+(Do you want nanobots? A) Yes - would increase health but lower social, B) Not now. Health decreases but money goes up)
