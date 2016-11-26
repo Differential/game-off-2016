@@ -115,11 +115,11 @@ class Card extends Component {
 
     let yupOpacity = pan.x.interpolate({inputRange: [0, 150], outputRange: [0, 1]});
     let yupScale = pan.x.interpolate({inputRange: [0, 150], outputRange: [0.5, 1], extrapolate: 'clamp'});
-    let animatedYupStyles = {transform: [{scale: yupScale}], opacity: yupOpacity}
+    let animatedRightStyles = {transform: [{scale: yupScale}], opacity: yupOpacity}
 
     let nopeOpacity = pan.x.interpolate({inputRange: [-150, 0], outputRange: [1, 0]});
     let nopeScale = pan.x.interpolate({inputRange: [-150, 0], outputRange: [1, 0.5], extrapolate: 'clamp'});
-    let animatedNopeStyles = {transform: [{scale: nopeScale}], opacity: nopeOpacity}
+    let animatedLeftStyles = {transform: [{scale: nopeScale}], opacity: nopeOpacity}
 
     const { name, text, actions } = this.state.card;
     const { left, right } = actions;
@@ -132,11 +132,11 @@ class Card extends Component {
           <Text style={styles.cardText}>{text}</Text>
         </Animated.View>
 
-        <Animated.View style={[styles.left, animatedNopeStyles]}>
+        <Animated.View style={[styles.left, animatedLeftStyles]}>
           <Text style={styles.leftText}>{leftText}</Text>
         </Animated.View>
 
-        <Animated.View style={[styles.right, animatedYupStyles]}>
+        <Animated.View style={[styles.right, animatedRightStyles]}>
           <Text style={styles.rightText}>{rightText}!</Text>
         </Animated.View>
       </View>
@@ -162,14 +162,15 @@ var styles = StyleSheet.create({
     margin: 10,
   },
   card: {
-    width: 200,
-    height: 200,
+    width: 300,
+    height: 400,
     backgroundColor: 'red',
   },
   right: {
     borderColor: 'black',
     borderWidth: 2,
     position: 'absolute',
+    backgroundColor: 'white',
     padding: 20,
     bottom: 20,
     borderRadius: 5,
@@ -182,6 +183,7 @@ var styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 2,
     position: 'absolute',
+    backgroundColor: 'white',
     bottom: 20,
     padding: 20,
     borderRadius: 5,

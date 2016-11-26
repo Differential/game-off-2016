@@ -13,7 +13,7 @@ const cards = [
         text: 'Make another choice',
         resultText: 'you made a different choice!',
         fameChange: -20,
-        healthChange: 20,
+        wealthChange: 20,
       }
     }
   }
