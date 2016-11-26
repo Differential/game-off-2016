@@ -10,6 +10,7 @@ import {
   View,
   Animated,
   PanResponder,
+  Image,
 } from 'react-native';
 
 import clamp from 'clamp';
@@ -120,7 +121,7 @@ class Card extends Component {
     let nopeScale = pan.x.interpolate({inputRange: [-150, 0], outputRange: [1, 0.5], extrapolate: 'clamp'});
     let animatedLeftStyles = {transform: [{scale: nopeScale}], opacity: nopeOpacity}
 
-    const { name, text, actions } = this.state.card;
+    const { name, text, actions, image } = this.state.card;
     const { left, right } = actions;
     const { text: leftText } = left;
     const { text: rightText } = right;
@@ -129,6 +130,7 @@ class Card extends Component {
         <Animated.View style={[styles.card, animatedCardStyles]} {...this._panResponder.panHandlers}>
           <Text style={styles.cardHeader}>{name}</Text>
           <Text style={styles.cardText}>{text}</Text>
+          {image ? <Image style={styles.image} source={{uri: image}} /> : null}
         </Animated.View>
 
         <Animated.View style={[styles.left, animatedLeftStyles]}>
@@ -168,6 +170,14 @@ var styles = StyleSheet.create({
     borderColor: '#649E4A',
     borderWidth: 3,
     borderStyle: 'dashed',
+    alignItems: 'center',
+  },
+  image: {
+    backgroundColor: 'black',
+    borderColor: '#649E4A',
+    borderWidth: 3,
+    width: 200,
+    height: 200,
   },
   right: {
     borderColor: 'black',

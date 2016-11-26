@@ -2,6 +2,7 @@ const cards = [
   {
     name: 'Card 1',
     text: 'This is an interesting choice',
+    image: "https://1833.fm/wp-content/uploads/2015/02/brf9mp1hlaiznmn9uy9p.png",
     actions: {
       left: {
         text: 'Make one choice',
