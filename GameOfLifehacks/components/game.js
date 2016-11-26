@@ -75,7 +75,7 @@ class Game extends Component {
           <ProgressBar text="Fame" percent={this.props.fame} />
         </View>
         <View style={styles.body}>
-            <Card onAction={this.props.makeChoice} />
+            <Card onAction={this.props.makeChoice} cards={this.props.cards}/>
         </View>
       </View>
     )
@@ -87,6 +87,7 @@ const mapStateToProps = (state) => {
     wealth: state.game.wealth.current,
     health: state.game.health.current,
     fame: state.game.fame.current,
+    cards: state.game.cards,
   }
 };
 

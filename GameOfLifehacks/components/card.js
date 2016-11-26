@@ -14,8 +14,6 @@ import {
 
 import clamp from 'clamp';
 
-import cards from '../store/cards';
-
 var SWIPE_THRESHOLD = 120;
 
 class Card extends Component {
@@ -25,11 +23,12 @@ class Card extends Component {
     this.state = {
       pan: new Animated.ValueXY(),
       enter: new Animated.Value(0.5),
-      card: cards[0],
+      card: props.cards[0],
     }
   }
 
   _goToNextCard() {
+    const cards = this.props.cards;
     let currentCardIndex = cards.indexOf(this.state.card);
     let newIdx = currentCardIndex + 1;
 
