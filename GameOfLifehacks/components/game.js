@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { makeChoice } from '../store/actions';
 
 import {
   View,
@@ -55,16 +57,28 @@ class Game extends Component {
     return (
       <View style={styles.gameContainer}>
         <View style={styles.header}>
-          <ProgressBar text="Wealth" percent={50} />
-          <ProgressBar text="Health" percent={75} />
-          <ProgressBar text="Fame" percent={25} />
+          <ProgressBar text="Wealth" percent={this.props.wealth} />
+          <ProgressBar text="Health" percent={this.props.health} />
+          <ProgressBar text="Fame" percent={this.props.fame} />
         </View>
         <View style={styles.body}>
-          <Card onAction={console.log} />
+          <Card onAction={this.props.makeChoice} />
         </View>
       </View>
     )
   }
 }
 
-export default Game;
+const mapStateToProps = (state) => {
+  return {
+    wealth: state.game.wealth.current,
+    health: state.game.health.current,
+    fame: state.game.fame.current,
+  }
+};
+
+const mapDispatchToProps = {
+  makeChoice,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
