@@ -149,22 +149,26 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   cardHeader: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
     margin: 10,
+    color: 'white',
   },
   cardText: {
     textAlign: 'center',
     margin: 10,
+    color: 'white',
   },
   card: {
     width: 300,
     height: 400,
-    backgroundColor: 'red',
+    backgroundColor: 'black',
+    borderColor: '#649E4A',
+    borderWidth: 3,
+    borderStyle: 'dashed',
   },
   right: {
     borderColor: 'black',
