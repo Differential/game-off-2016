@@ -29,7 +29,7 @@ class Card extends Component {
 
   _goToNextCard() {
     const cards = this.props.cards;
-    let currentCardIndex = cards.indexOf(this.state.card);
+    let currentCardIndex = cards.lastIndexOf(this.state.card);
     let newIdx = currentCardIndex + 1;
 
     this.setState({

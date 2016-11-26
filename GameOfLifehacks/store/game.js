@@ -42,7 +42,7 @@ function handleChoice({ fameChange = 0, wealthChange = 0, healthChange = 0, resu
   const fame = Object.assign({}, f, { current: f.current += fameChange });
   const wealth = Object.assign({}, w, { current: w.current += wealthChange });
   const health = Object.assign({}, h, { current: h.current += healthChange });
-  const cards = c.slice(0)
+  const cards = c.slice(0);
   if (resultText){
     cards.push(buildResultCard({ resultText }));
   } else {
